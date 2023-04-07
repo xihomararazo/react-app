@@ -1,0 +1,40 @@
+{
+  "postsList": [
+    {
+      "image": "https://via.placeholder.com/150",
+      "createdAt": "3 min ago",
+      "isLike": true,
+      "likes": 43,
+      "autor": "Xihomara",
+      "text": "Publicacion 1.",
+      "comments": 15
+    },
+    {
+      "image": "https://via.placeholder.com/150",
+      "createdAt": "18:00",
+      "isLike": false,
+      "likes": 80,
+      "autor": "Juan",
+      "text": "Phasellus ornare dictum tellus. Curabitur a tortor nibh. In viverra lorem eget pellentesque facilisis.",
+      "comments": 50
+    },
+    {
+      "image": "https://via.placeholder.com/150",
+      "createdAt": "10:00",
+      "isLike": true,
+      "likes": 10,
+      "autor": "Mar",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel leo id nulla porttitor ultricies.",
+      "comments": 20
+    },
+    {
+      "image": "https://via.placeholder.com/150",
+      "createdAt": "yesterday",
+      "isLike": false,
+      "likes": 0,
+      "autor": "Oscar",
+      "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+      "comments": 35
+    }
+  ]
+}

@@ -1,18 +1,18 @@
-function LikeButton({ isLike, likes }) {
+function LikeButton({ isLike, likes, myLikeChange }) {
   if (isLike === true) {
     return (
       <div className="col align-self-end text-end">
-        <a href="#" className="btn btn-danger">
+        <button onClick={myLikeChange} className="btn btn-danger">
           <i className="fa-solid fa-heart"></i> {likes}
-        </a>
+        </button>
       </div>
     );
   }
   return (
     <div className="col align-self-end text-end">
-      <a href="#" className="btn btn-secondary">
+      <button onClick={myLikeChange} className="btn btn-secondary">
         <i className="fa-regular fa-heart"></i> {likes}
-      </a>
+      </button>
     </div>
   );
 }
