@@ -1,4 +1,4 @@
-# Ejercicio 1 – Aplicación React estática
+# Ejercicio 2 – Aplicación React dinámica
 
 # Getting Started with Create React App
 
