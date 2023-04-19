@@ -1,4 +1,6 @@
-# Ejercicio 2 – Aplicación React dinámica
+# Ejercicio 3 – Aplicación React dinámica HTTP
+
+user :{username: "john", password: "P4ssW0rd!#"}
 
 # Getting Started with Create React App
 

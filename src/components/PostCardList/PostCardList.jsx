@@ -3,14 +3,21 @@ import { GetList } from "../../services/PostService";
 
 import PostCard from "../PostCard/PostCard";
 
-function PostCardList({ filterTxt }) {
+function PostCardList({ filterTxt, changeAuth }) {
   const [cardList, setList] = useState([]);
 
   useEffect(() => {
-    GetList().then((data) => {
-      setList(data);
-    });
-  });
+    GetList()
+      .then((res) => {
+        setList(res.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          changeAuth(false);
+          alert("unauthorized, the session was expired");
+        }
+      });
+  }, []);
 
   if (!cardList.length) {
     return (
@@ -30,11 +37,11 @@ function PostCardList({ filterTxt }) {
               key={i}
               image={card.image}
               createdAt={card.createdAt}
-              isLike={card.isLike}
               likes={card.likes}
-              autor={card.autor}
+              author={card.author}
               text={card.text}
               comments={card.comments}
+              id={card.id}
             />
           ))}
       </div>
