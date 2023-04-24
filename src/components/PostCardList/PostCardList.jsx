@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { GetList } from "../../services/PostService";
-
 import PostCard from "../PostCard/PostCard";
 
-function PostCardList({ filterTxt, changeAuth }) {
+function PostCardList({ changeAuth, filterTxt }) {
   const [cardList, setList] = useState([]);
 
   useEffect(() => {
+    GetListData();
+  }, []);
+
+  function GetListData() {
     GetList()
       .then((res) => {
         setList(res.data);
@@ -17,7 +20,17 @@ function PostCardList({ filterTxt, changeAuth }) {
           alert("unauthorized, the session was expired");
         }
       });
-  }, []);
+  }
+  const removePost = (idremove) => {
+    var newList = cardList;
+    const index = newList.findIndex((x) => x.id === idremove);
+    if (index > -1) {
+      newList.splice(index, 1);
+    }
+    console.log(newList);
+    setList(newList);
+    console.log(cardList);
+  };
 
   if (!cardList.length) {
     return (
@@ -42,6 +55,8 @@ function PostCardList({ filterTxt, changeAuth }) {
               text={card.text}
               comments={card.comments}
               id={card.id}
+              changeAuth={changeAuth}
+              removePost={removePost}
             />
           ))}
       </div>

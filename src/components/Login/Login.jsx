@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PostLogin, setToken } from "../../services/UsersService";
 
 function Login({ changeAuth }) {
+  let navigate = useNavigate();
   const [error, setError] = useState(false);
 
   function openAlert() {
@@ -37,10 +39,15 @@ function Login({ changeAuth }) {
           changeAuth(true);
         })
         .catch(function (error) {
+          console.log(error);
           setError(true);
           btn.textContent = "Login";
         });
     }
+  };
+
+  const onRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -73,9 +80,17 @@ function Login({ changeAuth }) {
           id="btn"
           onClick={onLoginComplete}
           type="button"
-          className="btn btn-primary ms-5 me-5"
+          className="btn btn-primary ms-5 me-5 mt-3"
         >
           Login
+        </button>
+        <button
+          id="btnRegister"
+          onClick={onRegister}
+          type="button"
+          className="btn btn-info ms-5 me-5 mt-3"
+        >
+          Register
         </button>
       </div>
     </div>

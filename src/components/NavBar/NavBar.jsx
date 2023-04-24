@@ -1,10 +1,15 @@
-function NavBar({ changeSection }) {
+import { useNavigate } from "react-router-dom";
+
+function NavBar({ user, onLogout }) {
+  //console.log(user);
+  let navigate = useNavigate();
+
   const onLogoClick = () => {
-    changeSection("home");
+    navigate("/");
   };
 
   const onProfileClick = () => {
-    changeSection("profile");
+    navigate(`/perfil/${user}`);
   };
 
   return (
@@ -30,4 +35,5 @@ function NavBar({ changeSection }) {
     </header>
   );
 }
+
 export default NavBar;

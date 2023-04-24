@@ -1,6 +1,6 @@
 import Comment from "../Comment/Comment";
 
-function CommentList({ comments }) {
+function CommentList({ idPost, comments, changeAuth, removeComment }) {
   return (
     <div className="row">
       {comments.map((comment, i) => (
@@ -10,6 +10,9 @@ function CommentList({ comments }) {
           user={comment.user}
           createdAt={comment.createdAt}
           id={comment.id}
+          idPos={idPost}
+          changeAuth={changeAuth}
+          removeComment={removeComment}
         />
       ))}
     </div>

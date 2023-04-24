@@ -13,6 +13,22 @@ export function PostLogin(username, password) {
     password: password,
   });
 }
+export function PostRegister(avatar, username, name, password, bio) {
+  let formData = new FormData();
+  formData.append('avatar', avatar);
+  formData.append('username', username);
+  formData.append('name', name);
+  formData.append('password', password);
+  formData.append('bio', bio);
+
+  return axios.post(
+    url + "/users",
+    formData,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+  );
+}
 export function GetProfile(id) {
   return axios.get(url + "/users/" + id, {
     headers: {
