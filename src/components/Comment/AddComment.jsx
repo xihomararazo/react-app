@@ -19,7 +19,7 @@ function AddComment({ idPost, changeAuth, createCommentObj }) {
   };
 
   return (
-    <div className="container mt-2 ">
+    <div className="container mt-2 mb-2">
       <div className="d-flex">
         <input type="text" className="form-control" id="comment" />
         <button onClick={onComment} className={"btn btn btn-primary ms-2"}>

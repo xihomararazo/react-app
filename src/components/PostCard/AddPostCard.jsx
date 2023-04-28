@@ -1,6 +1,6 @@
 import { CreatePost } from "../../services/PostService";
 
-function AddPostCard({ changeAuth }) {
+function AddPostCard({ changeAuth,onCreateNewPost }) {
   const onCreatePost = () => {
     const image = document.getElementById("image");
     const txt = document.getElementById("txt");
@@ -20,9 +20,11 @@ function AddPostCard({ changeAuth }) {
 
       CreatePost(image.files[0], txt.value)
         .then((res) => {
+          console.log(res);
+          onCreateNewPost(res);
           image.value = "";
           txt.value = "";
-          console.log(res);
+         
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -34,7 +36,7 @@ function AddPostCard({ changeAuth }) {
     }
   };
   return (
-    <div className="col-lg-3 col-md-6 col-sm-12 ">
+    <div className="col-sm-12 ">
       <div className="card m-3 text-start">
         <div className="card-body">
           <h4>Create a new post</h4>

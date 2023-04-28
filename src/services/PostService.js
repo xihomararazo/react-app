@@ -26,7 +26,6 @@ export function CreatePost(image, text) {
   let formData = new FormData();
   formData.append('image', image);
   formData.append('text', text);
-  console.log(formData);
   return axios.post(
     url + "/posts",
     formData,

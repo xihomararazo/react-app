@@ -19,7 +19,7 @@ function PostCard({
 }) {
   const [totalLikes, setNumLikes] = useState(likes);
   const [showComments, setShowComments] = useState(false);
-  const [list, setlist] = useState(comments);
+  const [list, setList] = useState(comments.reverse());
 
   const addLike = (event) => {
     PostLike(id)
@@ -37,20 +37,18 @@ function PostCard({
   };
 
   const removeComment = (idremove) => {
-    var newList = list;
+    var newList = [...list];
     const index = newList.findIndex((x) => x.id === idremove);
     if (index > -1) {
       newList.splice(index, 1);
     }
-    console.log(newList);
-    setlist(newList);
-    console.log(list);
+    setList(newList);
   };
 
   const createCommentObj = (data) => {
     GetProfile(data.user)
       .then((p) => {
-        var newList = list;
+        var newList = [...list];
         const newComment = {
           text: data.text,
           user: {
@@ -66,12 +64,25 @@ function PostCard({
           createdAt: data.createdAt,
           id: data.id,
         };
-        // console.log(newComment);
-        newList.push(newComment);
-        setlist(newList);
-        console.log(list);
+
+        newList.unshift(newComment);
+        setList(newList);
       })
       .catch(function (error) {
+        if (error.response.status === 401) {
+          changeAuth(false);
+          alert("unauthorized, the session was expired");
+        }
+      });
+  };
+
+  const onDeletePost = () => {
+    DeletePost(id)
+      .then((res) => {
+        console.log(res);
+        removePost(id);
+      })
+      .catch((error) => {
         if (error.response.status === 401) {
           changeAuth(false);
           alert("unauthorized, the session was expired");
@@ -99,19 +110,7 @@ function PostCard({
       );
     }
   }
-  const onDeletePost = () => {
-    DeletePost(id)
-      .then((res) => {
-        console.log(res);
-        removePost(id);
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          changeAuth(false);
-          alert("unauthorized, the session was expired");
-        }
-      });
-  };
+
   const dateObj = new Date(createdAt);
 
   return (

@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-function NavBar({ user, onLogout }) {
-  //console.log(user);
+function NavBar({ user }) {
   let navigate = useNavigate();
 
   const onLogoClick = () => {
+    console.log("tap");
     navigate("/");
   };
 
   const onProfileClick = () => {
+    if (!user) {
+      navigate(`/`);
+      return;
+    }
     navigate(`/perfil/${user}`);
   };
 

@@ -1,26 +1,26 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { token } from "./services/UsersService";
+import { GetProfile, token } from "./services/UsersService";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { LoginPage, RegistroPage } from "./pages/public_pages";
 import { HomePage, ProfilePage } from "./pages/private_pages";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   const [auth, setAut] = useState(token);
-  const [searchTxt, setSearchTxt] = useState("");
   const [user, setUser] = useState("");
+  const [userData, setUserData] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    //localStorage.clear();
+    localStorage.clear();
     if (token !== null) {
       setAut(token);
       GetUser();
     }
   }, []);
 
-  console.log("auth App  " + auth);
   const changeAuth = (isAuth) => {
     if (isAuth === true) {
       GetUser();
@@ -38,63 +38,48 @@ function App() {
   function GetUser() {
     const idUser = JSON.parse(atob(token.split(".")[1])).sub;
     setUser(idUser);
+    GetProfileInfo(idUser);
+  }
+  function GetProfileInfo(idUser) {
+    GetProfile(idUser)
+      .then((p) => {
+        setUserData(p.data);
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          changeAuth(false);
+          alert("unauthorized, the session was expired");
+        }
+      });
   }
 
-  const changeFilterTxt = (txt) => {
-    setSearchTxt(txt);
-  };
-
-  // if (!auth) {
-  //   return (
-  //     <div className="App">
-  //       <Login changeAuth={changeAuth} />
-  //     </div>
-  //   );
-  // }
-  // return (
-  //   <div className="App">
-  //     <NavBar changeSection={changeSection} />
-  //     <div className="d-flex flex-row-reverse">
-  //       <button
-  //         id="btn"
-  //         onClick={onLogout}
-  //         type="button"
-  //         className="btn btn-primary mt-2 mb-2 me-2"
-  //       >
-  //         Logout
-  //       </button>
-  //     </div>
-
-  //     {addSecction()}
-  //   </div>
-  // );
   return (
-    <Routes>
-      <Route
-        path="/login"
-        element={<LoginPage changeAuth={changeAuth} />}
-      ></Route>
-      <Route
-        path="/register"
-        element={<RegistroPage changeAuth={changeAuth} />}
-      ></Route>
+    <>
+      <NavBar user={user} />
+      <div>
+        <Routes>
+          <Route
+            path="/login"
+            element={<LoginPage changeAuth={changeAuth} />}
+          ></Route>
+          <Route
+            path="/register"
+            element={<RegistroPage changeAuth={changeAuth} />}
+          ></Route>
+          <Route element={<ProtectedRoute auth={auth} />}>
+            <Route
+              path="/"
+              element={<HomePage changeAuth={changeAuth} userData={userData} />}
+            ></Route>
 
-      <Route element={<ProtectedRoute auth={auth} />}>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              changeAuth={changeAuth}
-              user={user}
-              searchTxt={searchTxt}
-              changeFilterTxt={changeFilterTxt}
-            />
-          }
-        ></Route>
-
-        <Route path="/perfil/:id" element={<ProfilePage user={user} onLogout={onLogout}/>}></Route>
-      </Route>
-    </Routes>
+            <Route
+              path="/perfil/:id"
+              element={<ProfilePage user={user} onLogout={onLogout} />}
+            ></Route>
+          </Route>
+        </Routes>
+      </div>
+    </>
   );
 }
 
